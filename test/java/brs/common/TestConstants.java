@@ -2,11 +2,11 @@ package brs.common;
 
 import brs.crypto.Crypto;
 
-import static brs.Constants.ONE_BURST;
+import static brs.Constants.ONE_ATM;
 
 public class TestConstants {
 
-  public static final String TEST_ACCOUNT_ID = "BURST-D95D-67CQ-8VDN-5EVAR";
+  public static final String TEST_ACCOUNT_ID = "ATM-D95D-67CQ-8VDN-5EVAR";
 
   public static final long TEST_ACCOUNT_NUMERIC_ID_PARSED = 4297397359864028267L;
 
@@ -20,7 +20,7 @@ public class TestConstants {
 
   public static final String DEADLINE = "400";
 
-  public static final String FEE = "" + ONE_BURST;
+  public static final String FEE = "" + ONE_ATM;
 
-  public static final long TEN_BURST = ONE_BURST * 10;
+  public static final long TEN_ATM = ONE_ATM * 10;
 }

@@ -1,6 +1,6 @@
 package brs.unconfirmedtransactions;
 
-import brs.BurstException.ValidationException;
+import brs.AtmException.ValidationException;
 import brs.Constants;
 import brs.Transaction;
 import brs.db.TransactionDb;

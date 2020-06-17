@@ -1,14 +1,14 @@
 package brs.db.store;
 
 import brs.Subscription;
-import brs.db.BurstKey;
+import brs.db.AtmKey;
 import brs.db.VersionedEntityTable;
 
 import java.util.Collection;
 
 public interface SubscriptionStore {
 
-  BurstKey.LongKeyFactory<Subscription> getSubscriptionDbKeyFactory();
+  AtmKey.LongKeyFactory<Subscription> getSubscriptionDbKeyFactory();
 
   VersionedEntityTable<Subscription> getSubscriptionTable();
 

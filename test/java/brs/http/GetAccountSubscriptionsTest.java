@@ -1,7 +1,7 @@
 package brs.http;
 
 import brs.Account;
-import brs.BurstException;
+import brs.AtmException;
 import brs.Subscription;
 import brs.common.AbstractUnitTest;
 import brs.common.QuickMocker;
@@ -42,7 +42,7 @@ public class GetAccountSubscriptionsTest extends AbstractUnitTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final long userId = 123L;
 
     final HttpServletRequest req = QuickMocker.httpServletRequest(

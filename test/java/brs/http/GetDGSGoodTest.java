@@ -1,6 +1,6 @@
 package brs.http;
 
-import brs.BurstException;
+import brs.AtmException;
 import brs.DigitalGoodsStore;
 import brs.common.QuickMocker;
 import brs.services.ParameterService;
@@ -34,7 +34,7 @@ public class GetDGSGoodTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final DigitalGoodsStore.Goods mockGoods = mock(DigitalGoodsStore.Goods.class);
     when(mockGoods.getId()).thenReturn(1L);
     when(mockGoods.getName()).thenReturn("name");

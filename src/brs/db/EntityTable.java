@@ -8,9 +8,9 @@ import java.util.List;
 public interface EntityTable<T> extends DerivedTable {
   void checkAvailable(int height);
 
-  T get(BurstKey dbKey);
+  T get(AtmKey dbKey);
 
-  T get(BurstKey dbKey, int height);
+  T get(AtmKey dbKey, int height);
 
   T getBy(Condition condition);
 

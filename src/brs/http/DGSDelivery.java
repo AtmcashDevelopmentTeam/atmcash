@@ -28,7 +28,7 @@ public final class DGSDelivery extends CreateTransaction {
   }
 
   @Override
-  JsonElement processRequest(HttpServletRequest req) throws BurstException {
+  JsonElement processRequest(HttpServletRequest req) throws AtmException {
 
     Account sellerAccount = parameterService.getSenderAccount(req);
     DigitalGoodsStore.Purchase purchase = parameterService.getPurchase(req);

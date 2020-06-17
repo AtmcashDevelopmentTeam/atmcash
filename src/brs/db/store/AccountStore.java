@@ -1,7 +1,7 @@
 package brs.db.store;
 
 import brs.Account;
-import brs.db.BurstKey;
+import brs.db.AtmKey;
 import brs.db.VersionedBatchEntityTable;
 import brs.db.VersionedEntityTable;
 
@@ -16,15 +16,15 @@ public interface AccountStore {
 
   VersionedEntityTable<Account.RewardRecipientAssignment> getRewardRecipientAssignmentTable();
 
-  BurstKey.LongKeyFactory<Account.RewardRecipientAssignment> getRewardRecipientAssignmentKeyFactory();
+  AtmKey.LongKeyFactory<Account.RewardRecipientAssignment> getRewardRecipientAssignmentKeyFactory();
 
-  BurstKey.LinkKeyFactory<Account.AccountAsset> getAccountAssetKeyFactory();
+  AtmKey.LinkKeyFactory<Account.AccountAsset> getAccountAssetKeyFactory();
 
   VersionedEntityTable<Account.AccountAsset> getAccountAssetTable();
 
   int getAssetAccountsCount(long assetId);
 
-  BurstKey.LongKeyFactory<Account> getAccountKeyFactory();
+  AtmKey.LongKeyFactory<Account> getAccountKeyFactory();
 
   Collection<Account.RewardRecipientAssignment> getAccountsWithRewardRecipient(Long recipientId);
 

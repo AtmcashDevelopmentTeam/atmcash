@@ -34,7 +34,7 @@ final class SendMoneyMulti extends CreateTransaction {
   }
 
   @Override
-  JsonElement processRequest(HttpServletRequest req) throws BurstException {
+  JsonElement processRequest(HttpServletRequest req) throws AtmException {
     Account sender = parameterService.getSenderAccount(req);
     String recipientString = Convert.emptyToNull(req.getParameter(RECIPIENTS_PARAMETER));
 

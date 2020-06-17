@@ -1,7 +1,7 @@
 package brs.http;
 
 import brs.Asset;
-import brs.BurstException;
+import brs.AtmException;
 import brs.assetexchange.AssetExchange;
 import brs.common.AbstractUnitTest;
 import brs.common.QuickMocker;
@@ -38,7 +38,7 @@ public class GetAssetTest extends AbstractUnitTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final long assetId = 4;
 
     final HttpServletRequest req = QuickMocker.httpServletRequest(

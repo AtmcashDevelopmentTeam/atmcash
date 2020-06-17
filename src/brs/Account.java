@@ -2,7 +2,7 @@ package brs;
 
 import brs.crypto.Crypto;
 import brs.crypto.EncryptedData;
-import brs.db.BurstKey;
+import brs.db.AtmKey;
 import brs.db.VersionedBatchEntityTable;
 import brs.util.Convert;
 
@@ -14,7 +14,7 @@ public class Account {
   private static final Logger logger = Logger.getLogger(Account.class.getSimpleName());
 
   public final long id;
-  public final BurstKey nxtKey;
+  public final AtmKey nxtKey;
   private final int creationHeight;
   private byte[] publicKey;
   private int keyHeight;
@@ -62,22 +62,22 @@ public class Account {
   public static class AccountAsset {
     public final long accountId;
     public final long assetId;
-    public final BurstKey burstKey;
+    public final AtmKey atmKey;
     private long quantityQNT;
     private long unconfirmedQuantityQNT;
 
-    protected AccountAsset(long accountId, long assetId, long quantityQNT, long unconfirmedQuantityQNT, BurstKey burstKey) {
+    protected AccountAsset(long accountId, long assetId, long quantityQNT, long unconfirmedQuantityQNT, AtmKey atmKey) {
       this.accountId = accountId;
       this.assetId = assetId;
       this.quantityQNT = quantityQNT;
       this.unconfirmedQuantityQNT = unconfirmedQuantityQNT;
-      this.burstKey = burstKey;
+      this.atmKey = atmKey;
     }
 
-    public AccountAsset(BurstKey burstKey, long accountId, long assetId, long quantityQNT, long unconfirmedQuantityQNT) {
+    public AccountAsset(AtmKey atmKey, long accountId, long assetId, long quantityQNT, long unconfirmedQuantityQNT) {
       this.accountId = accountId;
       this.assetId = assetId;
-      this.burstKey = burstKey;
+      this.atmKey = atmKey;
       this.quantityQNT = quantityQNT;
       this.unconfirmedQuantityQNT = unconfirmedQuantityQNT;
     }
@@ -128,14 +128,14 @@ public class Account {
     private Long prevRecipientId;
     private Long recipientId;
     private int fromHeight;
-    public final BurstKey burstKey;
+    public final AtmKey atmKey;
 
-    public RewardRecipientAssignment(Long accountId, Long prevRecipientId, Long recipientId, int fromHeight, BurstKey burstKey) {
+    public RewardRecipientAssignment(Long accountId, Long prevRecipientId, Long recipientId, int fromHeight, AtmKey atmKey) {
       this.accountId = accountId;
       this.prevRecipientId = prevRecipientId;
       this.recipientId = recipientId;
       this.fromHeight = fromHeight;
-      this.burstKey = burstKey;
+      this.atmKey = atmKey;
     }
 
     public long getAccountId() {
@@ -168,16 +168,16 @@ public class Account {
 
   }
 
-  private static BurstKey.LongKeyFactory<Account> accountBurstKeyFactory() {
-    return Burst.getStores().getAccountStore().getAccountKeyFactory();
+  private static AtmKey.LongKeyFactory<Account> accountAtmKeyFactory() {
+    return Atm.getStores().getAccountStore().getAccountKeyFactory();
   }
 
   private static VersionedBatchEntityTable<Account> accountTable() {
-    return Burst.getStores().getAccountStore().getAccountTable();
+    return Atm.getStores().getAccountStore().getAccountTable();
   }
 
   public static Account getAccount(long id) {
-    return id == 0 ? null : accountTable().get(accountBurstKeyFactory().newKey(id));
+    return id == 0 ? null : accountTable().get(accountAtmKeyFactory().newKey(id));
   }
 
   public static long getId(byte[] publicKey) {
@@ -199,16 +199,16 @@ public class Account {
       logger.log(Level.INFO, "CRITICAL ERROR: Reed-Solomon encoding fails for {0}", id);
     }
     this.id = id;
-    this.nxtKey = accountBurstKeyFactory().newKey(this.id);
-    this.creationHeight = Burst.getBlockchain().getHeight();
+    this.nxtKey = accountAtmKeyFactory().newKey(this.id);
+    this.creationHeight = Atm.getBlockchain().getHeight();
   }
 
-  protected Account(long id, BurstKey burstKey, int creationHeight) {
+  protected Account(long id, AtmKey atmKey, int creationHeight) {
     if (id != Crypto.rsDecode(Crypto.rsEncode(id))) {
       logger.log(Level.INFO, "CRITICAL ERROR: Reed-Solomon encoding fails for {0}", id);
     }
     this.id = id;
-    this.nxtKey = burstKey;
+    this.nxtKey = atmKey;
     this.creationHeight = creationHeight;
   }
 
@@ -278,7 +278,7 @@ public class Account {
   // or
   // this.publicKey is already set to an array equal to key
   public boolean setOrVerify(byte[] key, int height) {
-    return Burst.getStores().getAccountStore().setOrVerify(this, key, height);
+    return Atm.getStores().getAccountStore().setOrVerify(this, key, height);
   }
 
   public void apply(byte[] key, int height) {

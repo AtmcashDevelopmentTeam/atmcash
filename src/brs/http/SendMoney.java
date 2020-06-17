@@ -1,7 +1,7 @@
 package brs.http;
 
 import brs.Account;
-import brs.BurstException;
+import brs.AtmException;
 import brs.services.ParameterService;
 import com.google.gson.JsonElement;
 
@@ -20,7 +20,7 @@ final class SendMoney extends CreateTransaction {
   }
 
   @Override
-  JsonElement processRequest(HttpServletRequest req) throws BurstException {
+  JsonElement processRequest(HttpServletRequest req) throws AtmException {
     long recipient = ParameterParser.getRecipientId(req);
     long amountNQT = ParameterParser.getAmountNQT(req);
     Account account = parameterService.getSenderAccount(req);

@@ -4,8 +4,8 @@ import brs.AssetTransfer;
 import brs.AssetTransfer.Event;
 import brs.Attachment;
 import brs.Transaction;
-import brs.db.BurstKey;
-import brs.db.BurstKey.LongKeyFactory;
+import brs.db.AtmKey;
+import brs.db.AtmKey.LongKeyFactory;
 import brs.db.sql.EntitySqlTable;
 import brs.db.store.AssetTransferStore;
 import brs.util.Listener;
@@ -53,7 +53,7 @@ class AssetTransferServiceImpl {
   }
 
   public AssetTransfer addAssetTransfer(Transaction transaction, Attachment.ColoredCoinsAssetTransfer attachment) {
-    BurstKey dbKey = transferDbKeyFactory.newKey(transaction.getId());
+    AtmKey dbKey = transferDbKeyFactory.newKey(transaction.getId());
     AssetTransfer assetTransfer = new AssetTransfer(dbKey, transaction, attachment);
     assetTransferTable.insert(assetTransfer);
     listeners.notify(assetTransfer, Event.ASSET_TRANSFER);

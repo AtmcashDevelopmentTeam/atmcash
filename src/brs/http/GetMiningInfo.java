@@ -2,7 +2,7 @@ package brs.http;
 
 import brs.Block;
 import brs.Blockchain;
-import brs.Burst;
+import brs.Atm;
 import brs.Generator;
 import brs.util.Convert;
 import com.google.gson.JsonElement;
@@ -25,7 +25,7 @@ final class GetMiningInfo extends APIServlet.JsonRequestHandler {
   JsonElement processRequest(HttpServletRequest req) {
     JsonObject response = new JsonObject();
 		
-    response.addProperty("height", Long.toString((long)Burst.getBlockchain().getHeight() + 1));
+    response.addProperty("height", Long.toString((long)Atm.getBlockchain().getHeight() + 1));
 		
     Block lastBlock = blockchain.getLastBlock();
     byte[] newGenSig = generator.calculateGenerationSignature(lastBlock.getGenerationSignature(), lastBlock.getGeneratorId());

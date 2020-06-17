@@ -25,7 +25,7 @@ final class SendMoneyEscrow extends CreateTransaction {
   }
 	
   @Override
-  JsonElement processRequest(HttpServletRequest req) throws BurstException {
+  JsonElement processRequest(HttpServletRequest req) throws AtmException {
     Account sender = parameterService.getSenderAccount(req);
     Long recipient = ParameterParser.getRecipientId(req);
     Long amountNQT = ParameterParser.getAmountNQT(req);
@@ -79,7 +79,7 @@ final class SendMoneyEscrow extends CreateTransaction {
       return response;
     }
 		
-    long totalAmountNQT = Convert.safeAdd(amountNQT, signers.size() * Constants.ONE_BURST);
+    long totalAmountNQT = Convert.safeAdd(amountNQT, signers.size() * Constants.ONE_ATM);
     if(sender.getBalanceNQT() < totalAmountNQT) {
       JsonObject response = new JsonObject();
       response.addProperty(ERROR_CODE_RESPONSE, 6);

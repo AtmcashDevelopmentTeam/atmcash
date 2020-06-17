@@ -2,13 +2,13 @@ package brs.unconfirmedtransactions;
 
 import brs.*;
 import brs.Attachment.MessagingAliasSell;
-import brs.BurstException.NotCurrentlyValidException;
-import brs.BurstException.ValidationException;
+import brs.AtmException.NotCurrentlyValidException;
+import brs.AtmException.ValidationException;
 import brs.Transaction.Builder;
 import brs.common.QuickMocker;
 import brs.common.TestConstants;
-import brs.db.BurstKey;
-import brs.db.BurstKey.LongKeyFactory;
+import brs.db.AtmKey;
+import brs.db.AtmKey.LongKeyFactory;
 import brs.db.TransactionDb;
 import brs.db.VersionedBatchEntityTable;
 import brs.db.store.AccountStore;
@@ -39,48 +39,48 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(Burst.class)
+@PrepareForTest(Atm.class)
 public class UnconfirmedTransactionStoreTest {
 
   private BlockchainImpl mockBlockChain;
 
   private AccountStore accountStoreMock;
   private VersionedBatchEntityTable<Account> accountTableMock;
-  private LongKeyFactory<Account> accountBurstKeyFactoryMock;
+  private LongKeyFactory<Account> accountAtmKeyFactoryMock;
 
   private TimeService timeService = new TimeServiceImpl();
   private UnconfirmedTransactionStore t;
 
   @Before
   public void setUp() {
-    mockStatic(Burst.class);
+    mockStatic(Atm.class);
 
     final PropertyService mockPropertyService = mock(PropertyService.class);
     when(mockPropertyService.getInt(eq(Props.DB_MAX_ROLLBACK))).thenReturn(1440);
-    when(Burst.getPropertyService()).thenReturn(mockPropertyService);
+    when(Atm.getPropertyService()).thenReturn(mockPropertyService);
     when(mockPropertyService.getInt(eq(Props.P2P_MAX_UNCONFIRMED_TRANSACTIONS))).thenReturn(8192);
     when(mockPropertyService.getInt(eq(Props.P2P_MAX_PERCENTAGE_UNCONFIRMED_TRANSACTIONS_FULL_HASH_REFERENCE))).thenReturn(5);
     when(mockPropertyService.getInt(eq(Props.P2P_MAX_UNCONFIRMED_TRANSACTIONS_RAW_SIZE_BYTES_TO_SEND))).thenReturn(175000);
 
     mockBlockChain = mock(BlockchainImpl.class);
-    when(Burst.getBlockchain()).thenReturn(mockBlockChain);
+    when(Atm.getBlockchain()).thenReturn(mockBlockChain);
 
     accountStoreMock = mock(AccountStore.class);
     accountTableMock = mock(VersionedBatchEntityTable.class);
-    accountBurstKeyFactoryMock = mock(LongKeyFactory.class);
+    accountAtmKeyFactoryMock = mock(LongKeyFactory.class);
     TransactionDb transactionDbMock = mock(TransactionDb.class, Answers.RETURNS_DEFAULTS);
     when(accountStoreMock.getAccountTable()).thenReturn(accountTableMock);
-    when(accountStoreMock.getAccountKeyFactory()).thenReturn(accountBurstKeyFactoryMock);
+    when(accountStoreMock.getAccountKeyFactory()).thenReturn(accountAtmKeyFactoryMock);
 
     final Account mockAccount = mock(Account.class);
-    final BurstKey mockAccountKey = mock(BurstKey.class);
-    when(accountBurstKeyFactoryMock.newKey(eq(123L))).thenReturn(mockAccountKey);
+    final AtmKey mockAccountKey = mock(AtmKey.class);
+    when(accountAtmKeyFactoryMock.newKey(eq(123L))).thenReturn(mockAccountKey);
     when(accountTableMock.get(eq(mockAccountKey))).thenReturn(mockAccount);
     when(mockAccount.getUnconfirmedBalanceNQT()).thenReturn(Constants.MAX_BALANCE_NQT);
 
-    FluxCapacitor mockFluxCapacitor = QuickMocker.fluxCapacitorEnabledFunctionalities(FluxValues.PRE_POC2, FluxValues.DIGITAL_GOODS_STORE);
+    FluxCapacitor mockFluxCapacitor = QuickMocker.fluxCapacitorEnabledFunctionalities(FluxValues.PRE_DYMAXION, FluxValues.DIGITAL_GOODS_STORE);
 
-    when(Burst.getFluxCapacitor()).thenReturn(mockFluxCapacitor);
+    when(Atm.getFluxCapacitor()).thenReturn(mockFluxCapacitor);
 
     TransactionType.init(mockBlockChain, mockFluxCapacitor, null, null, null, null, null, null);
 

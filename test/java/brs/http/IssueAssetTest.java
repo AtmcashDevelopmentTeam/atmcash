@@ -2,8 +2,8 @@ package brs.http;
 
 import brs.Attachment;
 import brs.Blockchain;
-import brs.Burst;
-import brs.BurstException;
+import brs.Atm;
+import brs.AtmException;
 import brs.common.QuickMocker;
 import brs.common.QuickMocker.MockParam;
 import brs.fluxcapacitor.FluxCapacitor;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(Burst.class)
+@PrepareForTest(Atm.class)
 public class IssueAssetTest extends AbstractTransactionTest {
 
   private IssueAsset t;
@@ -47,7 +47,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final String nameParameter = stringWithLength(MIN_ASSET_NAME_LENGTH + 1);
     final String descriptionParameter = stringWithLength(MAX_ASSET_DESCRIPTION_LENGTH - 1);
     final int decimalsParameter = 4;
@@ -60,9 +60,9 @@ public class IssueAssetTest extends AbstractTransactionTest {
         new MockParam(QUANTITY_QNT_PARAMETER, quantityQNTParameter)
     );
 
-    mockStatic(Burst.class);
+    mockStatic(Atm.class);
     final FluxCapacitor fluxCapacitor = QuickMocker.fluxCapacitorEnabledFunctionalities(FluxValues.DIGITAL_GOODS_STORE);
-    when(Burst.getFluxCapacitor()).thenReturn(fluxCapacitor);
+    when(Atm.getFluxCapacitor()).thenReturn(fluxCapacitor);
 
     final Attachment.ColoredCoinsAssetIssuance attachment = (Attachment.ColoredCoinsAssetIssuance) attachmentCreatedTransaction(() -> t.processRequest(req), apiTransactionManagerMock);
     assertNotNull(attachment);
@@ -75,14 +75,14 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_missingName() throws BurstException {
+  public void processRequest_missingName() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest();
 
     assertEquals(MISSING_NAME, t.processRequest(req));
   }
 
   @Test
-  public void processRequest_incorrectAssetNameLength_smallerThanMin() throws BurstException {
+  public void processRequest_incorrectAssetNameLength_smallerThanMin() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MIN_ASSET_NAME_LENGTH - 1))
     );
@@ -91,7 +91,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_incorrectAssetNameLength_largerThanMax() throws BurstException {
+  public void processRequest_incorrectAssetNameLength_largerThanMax() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MAX_ASSET_NAME_LENGTH + 1))
     );
@@ -100,7 +100,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_incorrectAssetName() throws BurstException {
+  public void processRequest_incorrectAssetName() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MIN_ASSET_NAME_LENGTH + 1) + "[")
     );
@@ -109,7 +109,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_incorrectAssetDescription() throws BurstException {
+  public void processRequest_incorrectAssetDescription() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MIN_ASSET_NAME_LENGTH + 1)),
         new MockParam(DESCRIPTION_PARAMETER, stringWithLength(MAX_ASSET_DESCRIPTION_LENGTH + 1))
@@ -119,7 +119,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_incorrectDecimals_unParsable() throws BurstException {
+  public void processRequest_incorrectDecimals_unParsable() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MIN_ASSET_NAME_LENGTH + 1)),
         new MockParam(DESCRIPTION_PARAMETER, stringWithLength(MAX_ASSET_DESCRIPTION_LENGTH - 1)),
@@ -130,7 +130,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_incorrectDecimals_negativeNumber() throws BurstException {
+  public void processRequest_incorrectDecimals_negativeNumber() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MIN_ASSET_NAME_LENGTH + 1)),
         new MockParam(DESCRIPTION_PARAMETER, stringWithLength(MAX_ASSET_DESCRIPTION_LENGTH - 1)),
@@ -141,7 +141,7 @@ public class IssueAssetTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_incorrectDecimals_moreThan8() throws BurstException {
+  public void processRequest_incorrectDecimals_moreThan8() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
         new MockParam(NAME_PARAMETER, stringWithLength(MIN_ASSET_NAME_LENGTH + 1)),
         new MockParam(DESCRIPTION_PARAMETER, stringWithLength(MAX_ASSET_DESCRIPTION_LENGTH - 1)),

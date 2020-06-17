@@ -1744,7 +1744,7 @@ public final class BrsApiServiceGrpc {
 
     /**
      * <pre>
-     * Get the current Burst time (number of seconds since Burst epoch)
+     * Get the current Atm time (number of seconds since Atm epoch)
      * </pre>
      */
     public void getCurrentTime(com.google.protobuf.Empty request,
@@ -2506,7 +2506,7 @@ public final class BrsApiServiceGrpc {
 
     /**
      * <pre>
-     * Get the current Burst time (number of seconds since Burst epoch)
+     * Get the current Atm time (number of seconds since Atm epoch)
      * </pre>
      */
     public void getCurrentTime(com.google.protobuf.Empty request,
@@ -2937,7 +2937,7 @@ public final class BrsApiServiceGrpc {
 
     /**
      * <pre>
-     * Get the current Burst time (number of seconds since Burst epoch)
+     * Get the current Atm time (number of seconds since Atm epoch)
      * </pre>
      */
     public brs.grpc.proto.BrsApi.Time getCurrentTime(com.google.protobuf.Empty request) {
@@ -3373,7 +3373,7 @@ public final class BrsApiServiceGrpc {
 
     /**
      * <pre>
-     * Get the current Burst time (number of seconds since Burst epoch)
+     * Get the current Atm time (number of seconds since Atm epoch)
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<brs.grpc.proto.BrsApi.Time> getCurrentTime(

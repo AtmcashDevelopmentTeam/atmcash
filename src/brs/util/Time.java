@@ -2,7 +2,7 @@ package brs.util;
 
 import brs.Constants;
 
-// TODO burstkit4j integration
+// TODO atmkit4j integration
 public interface Time {
 
   int getTime();

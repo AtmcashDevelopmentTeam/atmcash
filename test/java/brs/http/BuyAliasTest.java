@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Burst.class})
+@PrepareForTest({Atm.class})
 public class BuyAliasTest extends AbstractTransactionTest {
 
   private BuyAlias t;
@@ -48,9 +48,9 @@ public class BuyAliasTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
-    mockStatic(Burst.class);
-    final HttpServletRequest req = QuickMocker.httpServletRequestDefaultKeys(new MockParam(AMOUNT_NQT_PARAMETER, "" + Constants.ONE_BURST));
+  public void processRequest() throws AtmException {
+    mockStatic(Atm.class);
+    final HttpServletRequest req = QuickMocker.httpServletRequestDefaultKeys(new MockParam(AMOUNT_NQT_PARAMETER, "" + Constants.ONE_ATM));
 
     final Offer mockOfferOnAlias = mock(Offer.class);
 
@@ -65,9 +65,9 @@ public class BuyAliasTest extends AbstractTransactionTest {
 
     when(parameterServiceMock.getAlias(eq(req))).thenReturn(mockAlias);
 
-    mockStatic(Burst.class);
+    mockStatic(Atm.class);
     final FluxCapacitor fluxCapacitor = QuickMocker.fluxCapacitorEnabledFunctionalities(FluxValues.DIGITAL_GOODS_STORE);
-    when(Burst.getFluxCapacitor()).thenReturn(fluxCapacitor);
+    when(Atm.getFluxCapacitor()).thenReturn(fluxCapacitor);
 
     final Attachment.MessagingAliasBuy attachment = (Attachment.MessagingAliasBuy) attachmentCreatedTransaction(() -> t.processRequest(req), apiTransactionManagerMock);
     assertNotNull(attachment);
@@ -77,7 +77,7 @@ public class BuyAliasTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_aliasNotForSale() throws BurstException {
+  public void processRequest_aliasNotForSale() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(new MockParam(AMOUNT_NQT_PARAMETER, "3"));
     final Alias mockAlias = mock(Alias.class);
 

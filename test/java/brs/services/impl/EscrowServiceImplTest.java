@@ -2,8 +2,8 @@ package brs.services.impl;
 
 import brs.Blockchain;
 import brs.Escrow;
-import brs.db.BurstKey;
-import brs.db.BurstKey.LongKeyFactory;
+import brs.db.AtmKey;
+import brs.db.AtmKey.LongKeyFactory;
 import brs.db.VersionedEntityTable;
 import brs.db.store.EscrowStore;
 import brs.services.AccountService;
@@ -59,7 +59,7 @@ public class EscrowServiceImplTest {
   public void getEscrowTransaction() {
     final long escrowId = 123L;
 
-    final BurstKey mockEscrowKey = mock(BurstKey.class);
+    final AtmKey mockEscrowKey = mock(AtmKey.class);
     final Escrow mockEscrow = mock(Escrow.class);
 
     when(mockEscrowDbKeyFactory.newKey(eq(escrowId))).thenReturn(mockEscrowKey);

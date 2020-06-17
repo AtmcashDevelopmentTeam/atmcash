@@ -1,9 +1,9 @@
 package brs.http;
 
-import brs.BurstException;
+import brs.AtmException;
 import com.google.gson.JsonElement;
 
-public final class ParameterException extends BurstException {
+public final class ParameterException extends AtmException {
 
   private transient final JsonElement errorResponse;
 

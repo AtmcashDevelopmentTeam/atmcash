@@ -1,6 +1,6 @@
 package brs.http;
 
-import brs.BurstException;
+import brs.AtmException;
 import brs.Transaction;
 import brs.services.ParameterService;
 import brs.services.TransactionService;
@@ -30,7 +30,7 @@ final class ParseTransaction extends APIServlet.JsonRequestHandler {
   }
 
   @Override
-  JsonElement processRequest(HttpServletRequest req) throws BurstException {
+  JsonElement processRequest(HttpServletRequest req) throws AtmException {
 
     String transactionBytes = Convert.emptyToNull(req.getParameter(TRANSACTION_BYTES_PARAMETER));
     String transactionJSON = Convert.emptyToNull(req.getParameter(TRANSACTION_JSON_PARAMETER));
@@ -38,7 +38,7 @@ final class ParseTransaction extends APIServlet.JsonRequestHandler {
     JsonObject response = JSONData.unconfirmedTransaction(transaction);
     try {
       transactionService.validate(transaction);
-    } catch (BurstException.ValidationException|RuntimeException e) {
+    } catch (AtmException.ValidationException|RuntimeException e) {
       logger.debug(e.getMessage(), e);
       response.addProperty(VALIDATE_RESPONSE, false);
       response.addProperty(ERROR_CODE_RESPONSE, 4);

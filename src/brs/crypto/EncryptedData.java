@@ -1,11 +1,11 @@
 package brs.crypto;
 
-import brs.BurstException;
-import burst.kit.entity.BurstEncryptedMessage;
+import brs.AtmException;
+import atmcash.kit.entity.AtmEncryptedMessage;
 
 import java.nio.ByteBuffer;
 
-// TODO replace this class with the one from burstkit4j
+// TODO replace this class with the one from atmkit4j
 public class EncryptedData {
   private static final EncryptedData EMPTY_DATA = new EncryptedData(new byte[0], new byte[0]);
 
@@ -13,17 +13,17 @@ public class EncryptedData {
     if (plaintext.length == 0) {
       return EMPTY_DATA;
     }
-    BurstEncryptedMessage message = Crypto.burstCrypto.encryptBytesMessage(plaintext, myPrivateKey, theirPublicKey);
+    AtmEncryptedMessage message = Crypto.atmCrypto.encryptBytesMessage(plaintext, myPrivateKey, theirPublicKey);
     return new EncryptedData(message.getData(), message.getNonce());
   }
 
   public static EncryptedData readEncryptedData(ByteBuffer buffer, int length, int maxLength)
-    throws BurstException.NotValidException {
+    throws AtmException.NotValidException {
     if (length == 0) {
       return EMPTY_DATA;
     }
     if (length > maxLength) {
-      throw new BurstException.NotValidException("Max encrypted data length exceeded: " + length);
+      throw new AtmException.NotValidException("Max encrypted data length exceeded: " + length);
     }
     byte[] noteBytes = new byte[length];
     buffer.get(noteBytes);
@@ -44,7 +44,7 @@ public class EncryptedData {
     if (data.length == 0) {
       return data;
     }
-    return Crypto.burstCrypto.decryptMessage(new BurstEncryptedMessage(data, nonce, false), myPrivateKey, theirPublicKey);
+    return Crypto.atmCrypto.decryptMessage(new AtmEncryptedMessage(data, nonce, false), myPrivateKey, theirPublicKey);
   }
 
   public byte[] getData() {

@@ -1,13 +1,13 @@
 package brs.db.store;
 
 import brs.Asset;
-import brs.db.BurstKey;
+import brs.db.AtmKey;
 import brs.db.sql.EntitySqlTable;
 
 import java.util.Collection;
 
 public interface AssetStore {
-  BurstKey.LongKeyFactory<Asset> getAssetDbKeyFactory();
+  AtmKey.LongKeyFactory<Asset> getAssetDbKeyFactory();
 
   EntitySqlTable<Asset> getAssetTable();
 

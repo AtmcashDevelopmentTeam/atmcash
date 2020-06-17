@@ -3,7 +3,7 @@ package brs.http;
 import brs.Account;
 import brs.Alias;
 import brs.Alias.Offer;
-import brs.BurstException;
+import brs.AtmException;
 import brs.common.AbstractUnitTest;
 import brs.common.QuickMocker;
 import brs.services.AliasService;
@@ -42,7 +42,7 @@ public class GetAliasesTest extends AbstractUnitTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final long accountId = 123L;
     final HttpServletRequest req = QuickMocker.httpServletRequest();
 

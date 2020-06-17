@@ -1,7 +1,7 @@
 package brs.db.store;
 
 import brs.Order;
-import brs.db.BurstKey;
+import brs.db.AtmKey;
 import brs.db.VersionedEntityTable;
 
 import java.util.Collection;
@@ -21,11 +21,11 @@ public interface OrderStore {
 
   Collection<Order.Ask> getAskOrdersByAsset(long assetId, int from, int to);
 
-  BurstKey.LongKeyFactory<Order.Ask> getAskOrderDbKeyFactory();
+  AtmKey.LongKeyFactory<Order.Ask> getAskOrderDbKeyFactory();
 
   VersionedEntityTable<Order.Ask> getAskOrderTable();
 
-  BurstKey.LongKeyFactory<Order.Bid> getBidOrderDbKeyFactory();
+  AtmKey.LongKeyFactory<Order.Bid> getBidOrderDbKeyFactory();
 
   Collection<Order.Bid> getBidOrdersByAccount(long accountId, int from, int to);
 

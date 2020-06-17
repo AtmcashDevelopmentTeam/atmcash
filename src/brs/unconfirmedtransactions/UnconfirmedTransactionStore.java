@@ -1,6 +1,6 @@
 package brs.unconfirmedtransactions;
 
-import brs.BurstException;
+import brs.AtmException;
 import brs.Transaction;
 import brs.peer.Peer;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UnconfirmedTransactionStore {
 
-  boolean put(Transaction transaction, Peer peer) throws BurstException.ValidationException;
+  boolean put(Transaction transaction, Peer peer) throws AtmException.ValidationException;
 
   Transaction get(Long transactionId);
 

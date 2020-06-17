@@ -1,7 +1,7 @@
 /*.iml
 /dist
 /.idea
-burst.jar
+atm.jar
 brs.log
 brs.log.*
 /conf/logging.properties
@@ -12,3 +12,6 @@ target
 *.prefs
 .project
 .classpath
+.settings
+atm_db
+*.jar

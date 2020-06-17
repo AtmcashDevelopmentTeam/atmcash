@@ -8,7 +8,7 @@
 
 package brs.at;
 
-import burst.kit.crypto.BurstCrypto;
+import atmcash.kit.crypto.AtmCrypto;
 import org.bouncycastle.util.Arrays;
 
 import java.math.BigInteger;
@@ -18,7 +18,7 @@ public class AtApiHelper {
     private AtApiHelper() {
     }
 
-    private static final BurstCrypto burstCrypto = BurstCrypto.getInstance();
+    private static final AtmCrypto atmCrypto = AtmCrypto.getInstance();
 
     public static int longToHeight(long x) {
         return (int) (x >> 32);
@@ -28,11 +28,11 @@ public class AtApiHelper {
         if (bytes.length > 8) {
             throw new BufferOverflowException();
         }
-        return burstCrypto.bytesToLong(bytes);
+        return atmCrypto.bytesToLong(bytes);
     }
 
     public static byte[] getByteArray(long l) {
-        return Arrays.reverse(burstCrypto.longToBytes(l));
+        return Arrays.reverse(atmCrypto.longToBytes(l));
     }
 
     public static int longToNumOfTx(long x) {

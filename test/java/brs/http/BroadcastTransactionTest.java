@@ -1,6 +1,6 @@
 package brs.http;
 
-import brs.BurstException;
+import brs.AtmException;
 import brs.Transaction;
 import brs.TransactionProcessor;
 import brs.services.ParameterService;
@@ -38,7 +38,7 @@ public class BroadcastTransactionTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final String mockTransactionBytesParameter = "mockTransactionBytesParameter";
     final String mockTransactionJson = "mockTransactionJson";
 
@@ -65,7 +65,7 @@ public class BroadcastTransactionTest {
   }
 
   @Test
-  public void processRequest_validationException() throws BurstException {
+  public void processRequest_validationException() throws AtmException {
     final String mockTransactionBytesParameter = "mockTransactionBytesParameter";
     final String mockTransactionJson = "mockTransactionJson";
 
@@ -77,7 +77,7 @@ public class BroadcastTransactionTest {
 
     when(parameterServiceMock.parseTransaction(eq(mockTransactionBytesParameter), eq(mockTransactionJson))).thenReturn(mockTransaction);
 
-    Mockito.doThrow(BurstException.NotCurrentlyValidException.class).when(transactionServiceMock).validate(eq(mockTransaction));
+    Mockito.doThrow(AtmException.NotCurrentlyValidException.class).when(transactionServiceMock).validate(eq(mockTransaction));
 
     final JsonObject result = (JsonObject) t.processRequest(req);
 

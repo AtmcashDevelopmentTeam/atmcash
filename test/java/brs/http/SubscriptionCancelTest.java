@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(Burst.class)
+@PrepareForTest(Atm.class)
 public class SubscriptionCancelTest extends AbstractTransactionTest {
 
   private SubscriptionCancel t;
@@ -49,7 +49,7 @@ public class SubscriptionCancelTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest() throws BurstException {
+  public void processRequest() throws AtmException {
     final Long subscriptionIdParameter = 123L;
 
     final HttpServletRequest req = QuickMocker.httpServletRequest(
@@ -67,9 +67,9 @@ public class SubscriptionCancelTest extends AbstractTransactionTest {
     when(parameterServiceMock.getSenderAccount(eq(req))).thenReturn(mockSender);
     when(subscriptionServiceMock.getSubscription(eq(subscriptionIdParameter))).thenReturn(mockSubscription);
 
-    mockStatic(Burst.class);
+    mockStatic(Atm.class);
     final FluxCapacitor fluxCapacitor = QuickMocker.fluxCapacitorEnabledFunctionalities(FluxValues.DIGITAL_GOODS_STORE);
-    when(Burst.getFluxCapacitor()).thenReturn(fluxCapacitor);
+    when(Atm.getFluxCapacitor()).thenReturn(fluxCapacitor);
 
     final Attachment.AdvancedPaymentSubscriptionCancel attachment = (Attachment.AdvancedPaymentSubscriptionCancel) attachmentCreatedTransaction(() -> t.processRequest(req), apiTransactionManagerMock);
     assertNotNull(attachment);
@@ -79,7 +79,7 @@ public class SubscriptionCancelTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_missingSubscriptionParameter() throws BurstException {
+  public void processRequest_missingSubscriptionParameter() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest();
 
     final JsonObject response = (JsonObject) t.processRequest(req);
@@ -89,7 +89,7 @@ public class SubscriptionCancelTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_failedToParseSubscription() throws BurstException {
+  public void processRequest_failedToParseSubscription() throws AtmException {
     final HttpServletRequest req = QuickMocker.httpServletRequest(
       new MockParam(SUBSCRIPTION_PARAMETER, "notALong")
     );
@@ -101,7 +101,7 @@ public class SubscriptionCancelTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_subscriptionNotFound() throws BurstException {
+  public void processRequest_subscriptionNotFound() throws AtmException {
     final long subscriptionId = 123L;
 
     final HttpServletRequest req = QuickMocker.httpServletRequest(
@@ -117,7 +117,7 @@ public class SubscriptionCancelTest extends AbstractTransactionTest {
   }
 
   @Test
-  public void processRequest_userIsNotSenderOrRecipient() throws BurstException {
+  public void processRequest_userIsNotSenderOrRecipient() throws AtmException {
     final long subscriptionId = 123L;
 
     final HttpServletRequest req = QuickMocker.httpServletRequest(

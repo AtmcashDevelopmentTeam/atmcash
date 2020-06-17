@@ -27,7 +27,7 @@ public final class SubscriptionCancel extends CreateTransaction {
   }
 
   @Override
-  JsonElement processRequest(HttpServletRequest req) throws BurstException {
+  JsonElement processRequest(HttpServletRequest req) throws AtmException {
     final Account sender = parameterService.getSenderAccount(req);
 
     String subscriptionString = Convert.emptyToNull(req.getParameter(SUBSCRIPTION_PARAMETER));
